@@ -1,0 +1,13 @@
+POST http://localhost:3000/task/create-task
+Content-Type: application/json
+
+{
+  "description": "Lavar a roupa de casa",
+  "date": "2012-04-23T18:25:43.511Z",
+  "timeRange": {
+    "startDate": "2012-04-23T18:25:43.511Z",
+    "endDate": "2012-04-23T18:40:43.511Z"
+  }
+}
+
+###
