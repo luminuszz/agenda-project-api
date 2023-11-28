@@ -9,8 +9,6 @@ export class App {
 
   constructor() {
     this.fastify = Fastify({ logger: true });
-
-
   }
 
   async initServer(): Promise<void> {
@@ -20,9 +18,6 @@ export class App {
       await this.registerPlugins();
 
       this.registerRoutes();
-
-
-  
 
       await this.fastify.listen({ port: 3000, host: "0.0.0.0" });
     } catch (e) {
@@ -53,19 +48,20 @@ export class App {
   }
 
   private async registerPlugins(): Promise<void> {
-
     await this.fastify.register(fastifyCors, {
       origin: (origin, cb) => {
-        const hostname = new URL(origin).hostname
-        if(hostname === "localhost"){
+        const hostname = new URL(origin).hostname;
+        if (
+          hostname === "localhost" ||
+          origin === "https://agenda-project-luminuszz.vercel.app/"
+        ) {
           //  Request from localhost will pass
-          cb(null, true)
-          return
+          cb(null, true);
+          return;
         }
         // Generate an error on other origins, disabling access
-        cb(new Error("Not allowed"), false)
-      }
-    })
+        cb(new Error("Not allowed"), false);
+      },
+    });
   }
-
 }
