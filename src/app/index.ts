@@ -49,19 +49,7 @@ export class App {
 
   private async registerPlugins(): Promise<void> {
     await this.fastify.register(fastifyCors, {
-      origin: (origin, cb) => {
-        const hostname = new URL(origin).hostname;
-        if (
-          hostname === "localhost" ||
-          origin === "https://agenda-project-luminuszz.vercel.app/"
-        ) {
-          //  Request from localhost will pass
-          cb(null, true);
-          return;
-        }
-        // Generate an error on other origins, disabling access
-        cb(new Error("Not allowed"), false);
-      },
+      origin: "*",
     });
   }
 }
