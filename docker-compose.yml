@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  proxy:
+    restart: unless-stopped
+    image: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - application
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - base_network
+
+
+  application:
+    hostname: agendaProject
+    ports:
+      - "3000:3000"
+    restart: always
+    build:
+      context: .
+      dockerfile: "./Dockerfile"
+    container_name: agendaProject
+    networks:
+      - base_network
+    env_file:
+      - .env
+
+
+networks:
+  base_network:
+
+
