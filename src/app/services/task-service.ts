@@ -1,4 +1,4 @@
-import { type TaskType, Task } from "./database";
+import { type TaskType, Task } from "../database";
 
 interface CreateTaskDto extends Omit<TaskType, "id"> {}
 
@@ -8,6 +8,7 @@ export class TaskService {
       date: createTaskDto.date,
       description: createTaskDto.description,
       timeRange: createTaskDto.timeRange,
+      userId: createTaskDto.userId,
     });
 
     await task.save();
@@ -16,4 +17,10 @@ export class TaskService {
   async getAllTasks(): Promise<TaskType[]> {
     return await Task.find();
   }
+
+  async getTasksByUserId(userId: string): Promise<TaskType[]> {
+    return await Task.find({ userId });
+  }
 }
+
+export const taskService = new TaskService();
