@@ -28,6 +28,10 @@ export class UserService {
   async findUserByEmail(email: string): Promise<UserWithId | null> {
     return await User.findOne({ email });
   }
+
+  async findUserById(userId: string): Promise<UserWithId> {
+    return await User.findById(userId);
+  }
 }
 
 export const userService = new UserService();

@@ -4,6 +4,6 @@ import { App } from "./app";
 
 const app = new App();
 
-(async () => {
+void (async () => {
   await app.initServer();
 })();

@@ -27,8 +27,9 @@ export class App {
       this.registerRoutes();
 
       await this.fastify.listen({ port: 3000, host: "0.0.0.0" });
+      console.log("server runniong");
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }
 
@@ -108,6 +109,23 @@ export class App {
         }
 
         await reply.status(403).send({ message: "Invalid credentials" });
+      },
+    });
+
+    this.fastify.route({
+      method: "GET",
+      url: "/user/me",
+      onRequest: [this.fastify.authenticate],
+      handler: async (request, reply) => {
+        const { id } = request.user as { id: string };
+
+        const user = await userService.findUserById(id);
+
+        await reply.status(200).send({
+          name: user.name,
+          email: user.email,
+          id: user._id,
+        });
       },
     });
   }
